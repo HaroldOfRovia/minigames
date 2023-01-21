@@ -1,0 +1,16 @@
+.closedCell {
+    width: 12px;
+    height: 12px;
+
+    border: 2px solid;
+    background-color: rgb(184, 184, 184);
+    border-left-color: rgb(221, 221, 221);
+    border-top-color: rgb(221, 221, 221);
+    border-bottom-color: rgb(78, 78, 78);
+    border-right-color: rgb(78, 78, 78);
+}
+
+.closedCell:hover {
+    cursor: pointer;
+    filter: brightness(80%);
+}
