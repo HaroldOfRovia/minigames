@@ -1,4 +1,8 @@
-.closedCell {
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
     width: 12px;
     height: 12px;
 
@@ -10,7 +14,39 @@
     border-right-color: rgb(78, 78, 78);
 }
 
-.closedCell:hover {
+.cell:hover {
     cursor: pointer;
     filter: brightness(80%);
+}
+
+.num1 {
+    color: blue;
+}
+
+.num2 {
+    color: green;
+}
+
+.num3 {
+    color: red;
+}
+
+.num4 {
+    color: darkblue;
+}
+
+.num5 {
+    color: brown;
+}
+
+.num6 {
+    color: turquoise;
+}
+
+.num7 {
+    color: black;
+}
+
+.num8 {
+    color: white;
 }
