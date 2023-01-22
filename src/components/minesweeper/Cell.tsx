@@ -9,12 +9,6 @@ export interface MineCell{
 }
 
 export const Cell = ({ x, y, content, open }: MineCell) => {
-    // const [show, setShow] = useState(open);
-
-    // document.getElementById(x + "-" + y)?.addEventListener('click', (e) =>{
-    //     setShow(true);
-    // });
-
     if(open){
         if(content === 'bomb'){
             return (
