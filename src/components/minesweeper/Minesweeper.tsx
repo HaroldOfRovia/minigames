@@ -3,10 +3,11 @@ import { Cell, MineCell } from "./Cell"
 import '../../styles/minesweeper/Minesweeper.css'
 
 export const Minesweeper = () => {
-    let generated = false, 
+    let generated = false,
+        lose = false, 
         width = 10,
         height = 10,
-        bombs = Math.floor((width*height) / 4);
+        bombs = Math.floor((width*height) / 10);
     const [cells, setCells] = useState<MineCell[][]>(initCells);
 
     function initCells(): MineCell[][]{
@@ -14,7 +15,7 @@ export const Minesweeper = () => {
         for(let i = 0; i < width; i++){
             arr.push([]);
             for(let j = 0; j < height; j++)
-                arr[i].push({ x: i, y: j, content: "", open: false });
+                arr[i].push({ x: j, y: i, content: "", open: false });
         }
         return arr;
     }
@@ -26,8 +27,8 @@ export const Minesweeper = () => {
                 y = Math.floor(Math.random() * height);
             if(clickX === x && clickY === y)
                 continue;
-            if(arr[x][y].content !== 'bomb'){
-                arr[x][y].content = 'bomb';
+            if(arr[y][x].content !== 'bomb'){
+                arr[y][x].content = 'bomb';
                 placedBombs++;
             }
         }
@@ -62,17 +63,43 @@ export const Minesweeper = () => {
         generated = true;
         setMines(arr, clickX, clickY);
         setNumbers(arr)
-        
+        console.log(arr);
         setCells([...arr]);
     }   
 
+    function showArea(x: number, y: number, visited: string[]){
+        cells[y][x].open = true;
+        if (typeof cells[y][x].content === 'number')
+            return;
+        for (let i = y - 1; i < y + 2 && i < cells.length; i++){
+            for (let j = x - 1; j < x + 2 && j < cells[0].length; j++){
+                if (i < 0 || j < 0)
+                    continue;
+                if (i === y && j === x)
+                    continue;
+                if (visited.includes(""+j+i))
+                    continue;
+                visited.push(""+j+i);
+                showArea(j, i, visited);
+            }
+        }
+    }
+
     useEffect(()=>{
         document.getElementById('field')?.addEventListener('click', (e) => {
-            if(generated)
-                return;
             const el = e.target as HTMLElement;
             let [x, y] = el.id.split("-");
-            generateGame(cells, +x, +y);
+            console.log(cells[+y][+x])
+            if(!generated)
+                generateGame(cells, +x, +y);
+            cells[+y][+x].open = true;
+            if(cells[+y][+x].content === '')
+                showArea(+x, +y, []);
+            else if (cells[+y][+x].content === 'bomb'){
+                lose = true;
+                alert("You gay!");
+            }
+            setCells([...cells]);
         }, true)
     }, []);
 
