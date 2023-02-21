@@ -123,13 +123,23 @@ export const Minesweeper = () => {
         })
     }, []);
 
+    function reset(e: any){
+        e.preventDefault();
+        generated = false;
+        lose = false;
+        bombs = Math.floor((width*height) / 10);
+        let arr = initCells();
+        console.log(arr);
+        setCells(arr);
+    }
+
     return (
         <>
-            <form id="gameSettings">
+            {/* <form id="gameSettings">
                 <input placeholder="размер поля"></input>
                 <input placeholder="кол-во мин"></input>
-                <button>Обновить</button>
-            </form>
+                <button onClick={ reset }>Обновить</button>
+            </form> */}
             <div id="field" style={ cssField(width, height) }>
                 { 
                 (function(){
